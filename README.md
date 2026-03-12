@@ -16,6 +16,10 @@ Currently, the repository contains:
 
 **Problem code:** `SHPATH - The Shortest Path`
 
+### 📄 `BFS_DFS.cpp` (C++)
+
+**Problem code:** `Graph Traversal – BFS and DFS`
+
 ---
 
 ## 📘 Problem Description
@@ -85,10 +89,12 @@ The goal is to find the paths of minimum cost between pairs of cities. Assume th
 
 **Output**
 
-- For each path, print **one integer** — the minimum transportation cost from `NAME1` to `NAME2`.
+- For each path, print **one integer** — the minimum transportation cost from `NAME1` to `NAME2`.  
 
-## ✅ Example 
-**Input**  
+
+### ✅ Example
+
+**Input**    
 1  
 4  
 gdansk  
@@ -122,3 +128,139 @@ bydgoszcz warszawa
 - The cost of each path is guaranteed to be ≤200000.  
 - City names are unique within a test case.  
 - This solution is implemented in **C++** as `SHPATH.cpp`.
+
+### 📄 `BFS_DFS.cpp`
+
+For a given graph represented by adjacency lists and a chosen starting vertex `v`, the task is to output the order of vertices visited during a graph traversal using either:
+
+- **DFS (Depth-First Search)** — traversal in depth
+- **BFS (Breadth-First Search)** — traversal in breadth
+
+All printed vertices must belong to the **same connected component** as the starting vertex.
+
+---
+
+### 🔹 Input
+
+- `t` — number of graphs (`t ≤ 100`)
+
+For each graph:
+
+- `n` — number of vertices (`1 ≤ n ≤ 1000`)
+
+Then `n` lines describing adjacency lists:  
+
+`i m a b c ...`
+
+
+where:
+
+- `i` — vertex number  
+- `m` — number of neighbours  
+- `a b c ...` — indices of neighbouring vertices
+
+If a vertex is **isolated**, its line is:
+a 0
+
+
+---
+
+### 🔹 Queries
+
+After the graph description, a sequence of queries follows:
+
+
+v i
+
+
+where:
+
+- `v` — starting vertex (`1 ≤ v ≤ n`)
+- `i` — traversal method:
+  - `0` → **DFS**
+  - `1` → **BFS**
+
+The sequence ends with:
+
+
+0 0
+
+
+Each query should output the order of visited vertices.
+
+---
+
+### 🔹 Output
+
+For each graph print:
+
+
+graph k
+
+
+where `k` is the graph number (starting from 1).
+
+For every query print **one line** containing the traversal order of vertices.
+
+---
+
+### ✅ Example
+
+**Input**
+
+
+1  
+6  
+1 2 3 4  
+2 2 3 6  
+3 2 1 2  
+4 1 1  
+5 0  
+6 1 2  
+5 1  
+1 0  
+1 0  
+0 0  
+
+
+**Output**
+
+graph 1  
+5  
+1 3 2 6 4  
+1 3 2 6 4  
+
+**Notes**
+
+- Each traversal prints only vertices belonging to the **same connected component** as the starting vertex.
+- The maximum number of vertices is **1000**, so adjacency lists are efficient.
+- BFS uses `queue<int>` from the C++ STL for optimal performance.
+
+
+---
+
+###  Implementation Details
+
+The program implements two classical graph traversal algorithms:
+
+### **DFS (Depth-First Search)**
+
+- Implemented recursively
+- Visits vertices by going as deep as possible before backtracking
+- Uses a `visited` vector to avoid revisiting vertices
+
+### **BFS (Breadth-First Search)**
+
+- Implemented using `std::queue`
+- Explores vertices level by level
+- Also uses a `visited` vector
+
+The graph is stored as:
+
+
+vector<vector<int>> graph
+
+
+which represents an **adjacency list**.
+
+---
