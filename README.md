@@ -20,11 +20,15 @@ Currently, the repository contains:
 
 **Problem code:** `Graph Traversal – BFS and DFS`
 
+### 📄 `MST_Kruskal.cpp`
+
+**Problem code:** `MST - Minimum Spanning Tree`
+
 ---
 
-## 📘 Problem Description
+# 📘 Problem Description
 
-### 🔹 `swap_min_max.py`
+## 📄 `swap_min_max.py`
 
 You are given a sequence of integers.  
 Your task is to swap all occurrences of the minimum and maximum values in that sequence.
@@ -70,7 +74,7 @@ Your task is to swap all occurrences of the minimum and maximum values in that s
 
 ---
 
-### 🔹 `SHPATH.cpp`
+## 📄 `SHPATH.cpp`
 
 You are given a list of cities. Each direct connection between two cities has its transportation cost (an integer bigger than 0).  
 The goal is to find the paths of minimum cost between pairs of cities. Assume that the cost of each path (sum of all direct connections in the path) is at most 200000.  
@@ -129,7 +133,9 @@ bydgoszcz warszawa
 - City names are unique within a test case.  
 - This solution is implemented in **C++** as `SHPATH.cpp`.
 
-### 📄 `BFS_DFS.cpp`
+---
+
+## 📄 `BFS_DFS.cpp`
 
 For a given graph represented by adjacency lists and a chosen starting vertex `v`, the task is to output the order of vertices visited during a graph traversal using either:
 
@@ -264,3 +270,114 @@ vector<vector<int>> graph
 which represents an **adjacency list**.
 
 ---
+
+## 📄 `MST_Kruskal.cpp`
+
+For a given **undirected weighted graph**, the task is to compute the **total weight of the Minimum Spanning Tree (MST)**.
+
+A **Minimum Spanning Tree** is a subset of edges that:
+
+- connects all vertices in the graph
+- contains exactly `N - 1` edges
+- has the **minimum possible total edge weight**
+- contains **no cycles**
+
+The solution is implemented using **Kruskal’s Algorithm** together with the **Disjoint Set Union (Union-Find)** data structure.
+
+---
+
+### 🔹 Algorithm
+
+The algorithm works as follows:
+
+1. **Sort all edges** in non-decreasing order of their weight.
+2. Initially, each vertex belongs to its **own set**.
+3. Iterate through the sorted edges:
+   - If the endpoints of the edge belong to **different sets**, add the edge to the MST.
+   - Merge the two sets using **Union-Find**.
+4. Stop when **N - 1 edges** have been added.
+
+Union-Find is used to efficiently check whether adding an edge would **create a cycle**.
+
+---
+
+### 🔹 Input
+
+- The first line contains two integers:
+  - `N` — number of vertices (`1 ≤ N ≤ 10000`)
+  - `M` — number of edges (`1 ≤ M ≤ 100000`)
+
+- The next `M` lines contain three integers: `u v w`
+
+- `u` — first vertex
+- `v` — second vertex
+- `w` — weight of the edge (`w ≤ 1000000`)
+
+Vertices are numbered from **1 to N**.
+
+---
+
+### 🔹 Output
+
+Print a **single integer** representing the **total weight of the Minimum Spanning Tree**.
+
+---
+
+### ✅ Example
+
+**Input**  
+
+4 5  
+1 2 10  
+2 3 15  
+1 3 5  
+4 2 2  
+4 3 40  
+
+
+**Output**
+
+17  
+
+---
+
+### 🔹 Implementation Details
+
+The solution uses **Kruskal’s algorithm** with the **Disjoint Set Union (DSU)** structure.
+
+The DSU supports two operations:
+
+- **find(x)**  
+  Finds the representative (root) of the set containing vertex `x`.
+
+- **unite(a, b)**  
+  Merges two sets if they are different.
+
+To improve efficiency, the implementation uses:
+
+- **Path Compression** in `find()`
+
+The graph is stored as a list of edges: `vector<Edge> edges;`
+
+Each edge contains:
+`struct Edge {
+int u, v, weight;
+};`
+
+Edges are sorted using: `sort(edges.begin(), edges.end(), [](const Edge& a, const Edge& b) {
+return a.weight < b.weight;
+});`
+
+The final MST weight is accumulated while processing edges.
+
+---
+
+### ⏱ Complexity
+
+Time complexity: `O(M log M)`
+
+- `M` — number of edges
+
+This is dominated by the **edge sorting step**.
+
+The Union-Find operations run in **almost constant time** due to path compression.
